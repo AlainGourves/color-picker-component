@@ -19,7 +19,7 @@ const updateColor = (clr) => {
 
 }
 
-colorPicker.addEventListener('change', e => {
+colorPicker.addEventListener('input', e => {
   updateColor(e.target.value);
 });
 

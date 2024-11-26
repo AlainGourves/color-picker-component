@@ -97,7 +97,9 @@ export default class ColorPicker extends HTMLElement {
         // this.tabIndex = 0; // make component focusable
 
         // Event listeners
+        this.picker.addEventListener('input', this);
         this.picker.addEventListener('change', this);
+        this.slider.addEventListener('input', this);
         this.slider.addEventListener('change', this);
     }
 
