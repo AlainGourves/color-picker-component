@@ -11,9 +11,14 @@ export default defineConfig({
 
   build: {
     emptyOutDir: true,
+    copyPublicDir: false,
+    // Note: at the moment lib mode do not minify the ES build
+    // See https://github.com/vitejs/vite/issues/6555
     // lib: {
-    //   entry: resolve(__dirname, 'js/color-picker.js'),
-    //   formats: ['es']
+    //   entry: [resolve(__dirname, 'js/color-picker.js')],
+    //   name: 'ColorPicker',
+    //   formats: ['es', 'iife'],
+    //   fileName: (format, entryName) => `${entryName}-${format}.js`,
     // },
 
     rollupOptions: {
@@ -22,13 +27,10 @@ export default defineConfig({
         {
           format: 'es',
           entryFileNames: '[name]-es.js',
-          // file: 'dist/color-picker-es.js',
-          // file: 'dist/color-picker.js',
         },
         {
           format: 'iife',
           entryFileNames: '[name]-iife.js',
-          // file: 'dist/color-picker-iife.js',
         }
       ],
     }
