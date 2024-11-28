@@ -6,7 +6,7 @@ template.innerHTML = `
         <input type="color" id="picker">
     </div>
     <label for="picker"></label>
-    <input type="range" id="slider" min="0" max="255">
+    <input type="range" id="slider" min="0" max="255" aria-label="Transparency value">
 </div>`;
 
 export default class ColorPicker extends HTMLElement {
