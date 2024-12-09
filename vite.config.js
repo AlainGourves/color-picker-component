@@ -7,6 +7,11 @@ export default defineConfig({
       scopeBehaviour: 'local',
       localsConvention: 'camelCaseOnly',
     },
+    preprocessorOptions: {
+      scss: {
+        api: 'modern-compiler' // toget rid of Dart SASS deprecation message !
+      }
+    }
   },
 
   build: {
