@@ -6,7 +6,10 @@ template.innerHTML = `
         <input type="color" id="picker">
     </div>
     <label for="picker"></label>
-    <input type="range" id="slider" min="0" max="255" aria-label="Transparency value">
+    <div id="slider-wrapper">
+        <input type="range" id="slider" min="0" max="255" aria-label="Transparency value">
+        <output for="slider"></output>
+    </div>
 </div>`;
 
 export default class ColorPicker extends HTMLElement {
@@ -30,6 +33,7 @@ export default class ColorPicker extends HTMLElement {
         this.picker = this.root.querySelector('#picker');
         this.pickerLabel = this.root.querySelector('label[for="picker"]');
         this.slider = this.root.querySelector('#slider');
+        this.output= this.root.querySelector('output[for="slider"]');
 
         this.defaultColor = '#000000';
         this.defaultAlpha = 255;
@@ -80,6 +84,8 @@ export default class ColorPicker extends HTMLElement {
                 this.shadowRoot.host.style.setProperty('--clr-grad', this.color)
             } else if (path.includes(this.slider)) {
                 this.alpha = parseInt(ev.target.value);
+                this.output.textContent = this.alpha;
+                this.shadowRoot.host.style.setProperty('--slider-val', this.alpha/255*100);
             }
             this._setColor();
             const event = new Event(ev.type, { bubbles: true, composed: true });
@@ -92,6 +98,8 @@ export default class ColorPicker extends HTMLElement {
         // Generally, you should try to delay work until this time.
         this.picker.value = this.color;
         this.slider.value = this.alpha;
+        this.shadowRoot.host.style.setProperty('--slider-val', this.alpha/255*100);
+        this.output.textContent = this.alpha;
         this.shadowRoot.host.style.setProperty('--clr-grad', this.color);
 
         // this.tabIndex = 0; // make component focusable
