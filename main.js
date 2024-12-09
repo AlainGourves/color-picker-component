@@ -1,15 +1,10 @@
 import './scss/style.scss'
 import ColorPicker from './js/color-picker.js';
 
-const app = document.querySelector('#app');
 const box = document.querySelector('#box');
 const theColor = box.querySelector('#the-color');
 
-app.innerHTML = `
-    <color-picker label="Background Color" value="#9aa60edc"></color-picker>
-`
-
-const colorPicker = app.querySelector('color-picker');
+const colorPicker = document.querySelector('color-picker');
 
 const updateColor = (clr) => {
   box.style.backgroundColor = clr;

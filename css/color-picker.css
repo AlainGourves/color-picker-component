@@ -9,10 +9,11 @@
 :host {
     --clr-grad: #000;
     --min-height: clamp(.75rem, .5rem + 2cqw, 2rem);
+    --padding: .75rem;
     container-type: inline-size;
     display: inline-grid;
-    width: 100%;
-    padding: .75rem;
+    width: calc(100% - 2*var(--padding));
+    padding: var(--padding);
     font-family: system-ui, sans-serif;
     font-size: var(--min-height);
     line-height: 1;
