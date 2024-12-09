@@ -8,23 +8,27 @@
 
 :host {
     --clr-grad: #000;
-    --slider-height: .875rem;
-    --slider-thumb: calc(var(--slider-height) * 4/3);
+    --min-height: clamp(.75rem, .5rem + 2cqw, 2rem);
+    container-type: inline-size;
+    display: inline-grid;
+    width: 100%;
+    padding: .75rem;
+    font-family: system-ui, sans-serif;
+    font-size: var(--min-height);
+    line-height: 1;
+    background: #eae5dc;
 }
 
 .colorPicker {
     --dark-grey: #909090;
     --light-grey: #f0f0f4;
-    --h: 2rem;
-    background: #eae5dc;
-    padding: .75em;
+    --picker-h: clamp(2rem, 1.5rem + 3cqw, 5rem);
     display: inline-grid;
-    grid-template-columns: var(--h) auto;
+    grid-template-columns: var(--picker-h) auto;
     align-items: center;
     justify-items: flex-start;
     gap: .5em;
-    font-family: system-ui, sans-serif;
-    font-size: .75rem;
+    gap: 3cqw;
     font-weight: 600;
     color: #3b2702;
     text-shadow: 0 0 2px var(--light-grey);
@@ -59,8 +63,8 @@ input:focus-visible,
 
 
 input[type=color] {
-    inline-size: var(--h);
-    block-size: var(--h);
+    inline-size: var(--picker-h);
+    block-size: var(--picker-h);
     border: 0;
     opacity: 0;
     pointer-events: initial;
@@ -78,14 +82,17 @@ input[type=color] {
     &::-moz-color-swatch {
         border: none;
     }
+}
 
+label {
+    text-wrap: nowrap;
 }
 
 #picker-wrapper {
     --rad: 4px;
     --marg: 2px;
-    inline-size: var(--h);
-    block-size: var(--h);
+    inline-size: var(--picker-h);
+    block-size: var(--picker-h);
     position: relative;
     pointer-events: none;
     border-radius: var(--rad);
@@ -112,6 +119,8 @@ input[type=color] {
 }
 
 #slider-wrapper {
+    --thumb-h: calc(var(--min-height)*4/3);
+
     grid-column: 1/-1;
     width: 100%;
     position: relative;
@@ -123,20 +132,20 @@ input[type=range] {
     &::-webkit-slider-runnable-track {
         box-sizing: border-box;
         appearance: none;
-        height: var(--slider-height);
+        height: var(--min-height);
         border-radius: 2px;
         background-image:
             linear-gradient(to right, transparent, var(--clr-grad, #000)),
             repeating-conic-gradient(var(--light-grey) 0 90deg, var(--dark-grey) 90deg 180deg);
-        background-size: 100%, var(--slider-height) var(--slider-height);
+        background-size: 100%, var(--min-height) var(--min-height);
     }
 
     &::-webkit-slider-thumb {
         box-sizing: border-box;
         appearance: none;
-        height: var(--slider-thumb);
-        width: 8px;
-        margin-block-start: calc(.5 * (var(--slider-height) - var(--slider-thumb)));
+        height: var(--thumb-h);
+        width: calc(var(--thumb-h)/2);
+        margin-block-start: calc(.5 * (var(--min-height) - var(--thumb-h)));
         border: none;
         border-radius: 2px;
         background: var(--light-grey);
@@ -146,18 +155,18 @@ input[type=range] {
 
     &::-moz-range-track {
         appearance: none;
-        height: var(--slider-height);
+        height: var(--min-height);
         border-radius: 2px;
         background-image:
             linear-gradient(to right, transparent, var(--clr-grad, #000)),
             repeating-conic-gradient(var(--light-grey) 0 90deg, var(--dark-grey) 90deg 180deg);
-        background-size: 100%, var(--slider-height) var(--slider-height);
+        background-size: 100%, var(--min-height) var(--min-height);
     }
 
     &::-moz-range-thumb {
         appearance: none;
-        width: var(--slider-thumb);
-        height: var(--slider-thumb);
+        width: calc(var(--thumb-h)/2);
+        height: var(--thumb-h);
         border: none;
         border-radius: 50%;
         background: var(--light-grey);
@@ -169,7 +178,7 @@ input[type=range] {
 input[type=range]:hover+output,
 input[type=range]:focus+output {
     opacity: 1;
-    top: calc(var(--slider-height) + .5rem);
+    top: 130%;
 }
 
 output {
@@ -178,12 +187,13 @@ output {
     place-content: center;
     background: var(--dark-grey);
     left: calc((var(--slider-val) * 1%) + ((50 - var(--slider-val))/100)*8px);
-    top: calc(var(--slider-height) *2);
+    top: 200%;
     transform: translateX(-50%);
     padding: .25em .5em;
     min-width: 4ch;
     line-height: 1;
     color: var(--light-grey);
+    font-size: max(12px, .75em);
     text-shadow: none;
     border-radius: .25em;
     pointer-events: none;
@@ -194,7 +204,7 @@ output {
     &::after {
         content: '';
         position: absolute;
-        width: 4px;
+        width: max(4px, 1.5cqw);
         aspect-ratio: 1;
         background: inherit;
         left: 50%;

@@ -6,9 +6,7 @@ const box = document.querySelector('#box');
 const theColor = box.querySelector('#the-color');
 
 app.innerHTML = `
-  <div>
     <color-picker label="Background Color" value="#9aa60edc"></color-picker>
-  </div>
 `
 
 const colorPicker = app.querySelector('color-picker');

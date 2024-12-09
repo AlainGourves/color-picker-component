@@ -2,11 +2,11 @@
 
 ![image](./public/color-picker.png)
 
-A customizable color picker web component that allows users to select colors with alpha transparency support. The component provides a color input and a slider for alpha channel control.
+Customizable color picker web component with alpha transparency support. The component provides a color input and a slider for alpha channel control.
 
 ## Features
 
-- Native color picker interface
+- Color picker interface
 - Alpha transparency control
 - Supports both 3-digit (`#rgb`) and 6-digit (`#rrggbb`) hex colors
 - Optional alpha channel in hex format (`#rrggbbaa`)
@@ -14,7 +14,7 @@ A customizable color picker web component that allows users to select colors wit
 
 ## Installation
 
-Grab a Javascript file from the `/dist` folder. The component is available in 2 versions :
+Grab a Javascript file from the `/dist` folder. The component is available in 2 flavors :
 
 - ES module: `color-picker-es.js`
 - IIFE format: `color-picker-iife.js`
@@ -57,7 +57,7 @@ Add the color picker to your HTML:
 
 
 - `label`: Text label for the color picker (defaults to "Color Picker")
-- `value`: Starting color value in hex format (`#rgb`, `#rrggbb`, `#rgba`, or `#rrggbbaa`). The color defaults to `#000000` and the transparency to `255`.
+- `value`: Starting color value in hex format (`#rgb`, `#rrggbb`, `#rgba`, or `#rrggbbaa`). Color value defaults to `#000000` and transparency to `255`.
 
 
 ## Events
@@ -66,6 +66,10 @@ The component emits the following events:
 
 - `input`: Triggered during color selection
 - `change`: Triggered when the color selection is completed
+
+## Return value
+
+A string of the form `#rrggbbaa`.
 
 ## JavaScript Interface
 
