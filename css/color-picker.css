@@ -7,32 +7,45 @@
 }
 
 :host {
-    --clr-grad: #000;
-    --min-height: clamp(.75rem, .5rem + 2cqw, 2rem);
+    --min-height: clamp(.75rem, .5rem + 1vw, 2rem);
     --padding: .75rem;
+    --picker-width: clamp(2rem, 1.5rem + 1vw, 5rem);
+    --drop-shadow: 2px 2px 4px #0005;
+    --output-arrow: 4px;
+    --clr-grad: #000;
+    --dark-grey: #909090;
+    --light-grey: #f0f0f4;
     container-type: inline-size;
     display: inline-grid;
     width: calc(100% - 2*var(--padding));
     padding: var(--padding);
     font-family: system-ui, sans-serif;
     font-size: var(--min-height);
+    font-weight: 600;
     line-height: 1;
+    color: #3b2702;
+    text-shadow: 0 0 2px var(--light-grey);
     background: #eae5dc;
+
+    @supports(font-size:1cqi) {
+    /*
+    All container queries units values are grouped here to supersede fallback values
+    */
+        --min-height: clamp(.75rem, .5rem + 1.5cqi, 2rem);
+        --padding: 2.5cqi;
+        --picker-width: clamp(2rem, 1.5rem + 3cqi, 5rem);
+        --drop-shadow: .3cqi .3cqi .6cqi #0005;
+        --output-arrow: 1.5cqi;
+    }
 }
 
 .colorPicker {
-    --dark-grey: #909090;
-    --light-grey: #f0f0f4;
-    --picker-h: clamp(2rem, 1.5rem + 3cqw, 5rem);
     display: inline-grid;
-    grid-template-columns: var(--picker-h) auto;
+    grid-template-columns: var(--picker-width) auto;
     align-items: center;
     justify-items: flex-start;
     gap: .5em;
-    gap: 3cqw;
-    font-weight: 600;
-    color: #3b2702;
-    text-shadow: 0 0 2px var(--light-grey);
+    gap: var(--padding);
 }
 
 input {
@@ -62,10 +75,13 @@ input:focus-visible,
     outline-offset: .2em;
 }
 
-
+/*
+ Native color input doesn't support transparency, so it is hidden (opacity:0)
+ & replaced with pseudo-elements (:before for the white background & :after for color + transparency)
+*/
 input[type=color] {
-    inline-size: var(--picker-h);
-    block-size: var(--picker-h);
+    inline-size: var(--picker-width);
+    block-size: var(--picker-width);
     border: 0;
     opacity: 0;
     pointer-events: initial;
@@ -92,8 +108,8 @@ label {
 #picker-wrapper {
     --rad: 4px;
     --marg: 2px;
-    inline-size: var(--picker-h);
-    block-size: var(--picker-h);
+    inline-size: var(--picker-width);
+    block-size: var(--picker-width);
     position: relative;
     pointer-events: none;
     border-radius: var(--rad);
@@ -169,7 +185,7 @@ input[type=range] {
         width: calc(var(--thumb-h)/2);
         height: var(--thumb-h);
         border: none;
-        border-radius: 50%;
+        border-radius: 2px;
         background: var(--light-grey);
         box-shadow: 0 0 0 1px var(--dark-grey) inset, 1px 1px 3px #111, 0px 0px 1px #0d0d0d;
         cursor: ew-resize;
@@ -180,6 +196,7 @@ input[type=range]:hover+output,
 input[type=range]:focus+output {
     opacity: 1;
     top: 130%;
+    filter: drop-shadow(var(--drop-shadow));
 }
 
 output {
@@ -199,13 +216,17 @@ output {
     border-radius: .25em;
     pointer-events: none;
     opacity: 0;
-    transition: opacity .4s cubic-bezier(0.4, 0, 0.2, 1),
+    z-index: 100;
+    filter: drop-shadow(0 0 0 #0000);
+    transition:
+        filter .4s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity .4s cubic-bezier(0.4, 0, 0.2, 1),
         top .4s cubic-bezier(0.4, 0, 0.2, 1);
 
     &::after {
         content: '';
         position: absolute;
-        width: max(4px, 1.5cqw);
+        width: var(--output-arrow);
         aspect-ratio: 1;
         background: inherit;
         left: 50%;
