@@ -87,3 +87,35 @@ picker.addEventListener('change', (e) => {
 });
 ```
 
+## CSS
+
+The component is fully responsive, it uses [container query length units](https://developer.mozilla.org/en-US/docs/Web/CSS/length#container_query_length_units) (with fallback for browsers which doesn’t support container queries).
+
+It also supports light/dark theme (see [Colors](#Colors)).
+
+Component is set to take 100% width of its parent.
+
+Exposed properties:
+
+  - `padding`
+  - `font-family`
+  - `font-size`
+  - `font-weight`
+  - `line-height`
+  - `color`
+  - `text-shadow`
+  - `background`
+
+### Colors
+
+Colors are handled through custom properties:
+
+- `--clr-base`
+- `--light-grey`
+- `--dark-grey`
+
+`--clr-base` sets the background color and is mixed with 60% black for the text (`color-mix(in oklch, var(--clr-base), black 60%)`).
+
+`--light-grey` and `--dark-grey` are used at various places fo the inputs.
+
+For the __dark theme__, values are reversed.
