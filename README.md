@@ -95,7 +95,7 @@ It also supports light/dark theme (see [Colors](#Colors)).
 
 Component is set to take 100% width of its parent.
 
-Exposed properties:
+### Exposed properties:
 
   - `padding`
   - `font-family`
@@ -116,6 +116,6 @@ Colors are handled through custom properties:
 
 `--clr-base` sets the background color and is mixed with 60% black for the text (`color-mix(in oklch, var(--clr-base), black 60%)`).
 
-`--light-grey` and `--dark-grey` are used at various places fo the inputs.
+`--light-grey` and `--dark-grey` are used at various places for the inputs.
 
 For the __dark theme__, values are reversed.
