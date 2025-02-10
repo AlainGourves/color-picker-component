@@ -8,7 +8,9 @@ template.innerHTML = `
     <label for="picker"></label>
     <div id="slider-wrapper">
         <input type="range" id="slider" min="0" max="255" aria-label="Transparency value">
-        <output for="slider"></output>
+        <div>
+            <output for="slider"></output>
+        </div>
     </div>
 </div>`;
 
@@ -18,7 +20,7 @@ export default class ColorPicker extends HTMLElement {
         super();
         // Attach a shadow root to the element.
         // `mode: open` -> the shadow root's internal features are accessible from JavaScript
-        let shadowRoot = this.attachShadow({
+        const shadowRoot = this.attachShadow({
             mode: 'open',
             delegatesFocus: true
         });
@@ -77,13 +79,13 @@ export default class ColorPicker extends HTMLElement {
 
     // Events handler
     handleEvent(ev) {
-        const path = ev.path || (ev.composedPath && ev.composedPath());
+        const path = ev.path || ev?.composedPath();
         if (ev.type === 'change' || ev.type === 'input') {
             if (path.includes(this.picker)) {
                 this.color = ev.target.value;
                 this.shadowRoot.host.style.setProperty('--clr-grad', this.color)
             } else if (path.includes(this.slider)) {
-                this.alpha = parseInt(ev.target.value);
+                this.alpha = Number.parseInt(ev.target.value);
                 this.output.textContent = this.alpha;
                 this.shadowRoot.host.style.setProperty('--slider-val', this.alpha/255*100);
             }
@@ -118,7 +120,7 @@ export default class ColorPicker extends HTMLElement {
     }
 
     attributeChangedCallback(name, oldValue, newValue) {
-        if (oldValue != newValue) {
+        if (oldValue !== newValue) {
             if (name === 'label') {
                 this.label = newValue;
                 this.pickerLabel.textContent = this.label;
@@ -127,7 +129,7 @@ export default class ColorPicker extends HTMLElement {
                 let matches = newValue.match(/^#([0-9a-f])([0-9a-f])([0-9a-f])([0-9a-f])?$/i);
                 if (matches) {
                     this.color = `#${matches[1]}${matches[1]}${matches[2]}${matches[2]}${matches[3]}${matches[3]}`;
-                    this.alpha = matches[4] ? parseInt(matches[4] + matches[4], 16) : this.defaultAlpha;
+                    this.alpha = matches[4] ? Number.parseInt(matches[4] + matches[4], 16) : this.defaultAlpha;
                 } else {
                     // get the color (#rrggbb[aa])
                     matches = newValue.match(/^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})?$/i);
@@ -137,7 +139,7 @@ export default class ColorPicker extends HTMLElement {
                         return alert(`Color value for ${this.label} is not correct!`);
                     }
                     this.color = `#${matches[1]}${matches[2]}${matches[3]}`;
-                    this.alpha = matches[4] ? parseInt(matches[4], 16) : this.defaultAlpha;
+                    this.alpha = matches[4] ? Number.parseInt(matches[4], 16) : this.defaultAlpha;
                 }
                 this.picker.value = this.color;
                 this.slider.value = this.alpha;

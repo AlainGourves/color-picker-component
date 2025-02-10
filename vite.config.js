@@ -1,5 +1,5 @@
 import { defineConfig } from "vite";
-import { format, resolve } from 'path'
+import { format, resolve } from 'node:path';
 
 export default defineConfig({
   css: {

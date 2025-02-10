@@ -30,18 +30,18 @@
     background: var(--clr-base);
 
     @supports(font-size:1cqi) {
-    /*
+        /*
     All container queries units values are grouped here to supersede fallback values
     */
         --min-height: clamp(.75rem, .5rem + 1.5cqi, 2rem);
         --picker-width: clamp(2rem, 1.5rem + 3cqi, 5rem);
         --drop-shadow: .3cqi .3cqi .6cqi #0005;
-        --output-arrow: 1.5cqi;
+        --output-arrow: 1cqi;
     }
 }
 
 @media (prefers-color-scheme: dark) {
-    :host{
+    :host {
         --dark-grey: #f0f0f4;
         --light-grey: #909090;
 
@@ -202,8 +202,8 @@ input[type=range] {
     }
 }
 
-input[type=range]:hover+output,
-input[type=range]:focus+output {
+input[type=range]:hover+div>output,
+input[type=range]:focus+div>output {
     opacity: 1;
     top: 130%;
     filter: drop-shadow(var(--drop-shadow));
@@ -232,15 +232,5 @@ output {
         filter .4s cubic-bezier(0.4, 0, 0.2, 1),
         opacity .4s cubic-bezier(0.4, 0, 0.2, 1),
         top .4s cubic-bezier(0.4, 0, 0.2, 1);
-
-    &::after {
-        content: '';
-        position: absolute;
-        width: var(--output-arrow);
-        aspect-ratio: 1;
-        background: inherit;
-        left: 50%;
-        top: 0;
-        transform: translate(-50%, -50%) rotate(45deg);
-    }
+    border-image: conic-gradient(from 135deg at 50% 0%, var(--dark-grey) 0 90deg, #0000 0) 1 /var(--output-arrow) 0 0 0 / calc(var(--output-arrow) - 1px) 0 0 0 repeat;
 }
