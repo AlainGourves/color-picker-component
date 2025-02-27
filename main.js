@@ -6,16 +6,17 @@ const theColor = box.querySelector('#the-color');
 
 const colorPicker = document.querySelector('color-picker');
 
-const updateColor = (clr) => {
+const updateColor = () => {
+  const clr = colorPicker.value;
   box.style.backgroundColor = clr;
   theColor.textContent = clr.toLowerCase();
-
 }
 
-colorPicker.addEventListener('input', e => {
-  updateColor(e.target.value);
-});
-
-window.addEventListener('load', e => {
-  updateColor(colorPicker.value);
+window.addEventListener('load', async (e) => {
+  await Promise.all([
+    customElements.whenDefined('color-picker'),
+  ]).then(() => {
+    colorPicker.addEventListener('input', updateColor);
+    updateColor();
+  });
 });

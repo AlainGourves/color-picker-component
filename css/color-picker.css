@@ -36,7 +36,7 @@
         --min-height: clamp(.75rem, .5rem + 1.5cqi, 2rem);
         --picker-width: clamp(2rem, 1.5rem + 3cqi, 5rem);
         --drop-shadow: .3cqi .3cqi .6cqi #0005;
-        --output-arrow: 1cqi;
+        --output-arrow: max(1cqi, 4px);
     }
 }
 
@@ -205,7 +205,8 @@ input[type=range] {
 input[type=range]:hover+div>output,
 input[type=range]:focus+div>output {
     opacity: 1;
-    top: 130%;
+    top: 140%;
+    top: calc(100% + 1.4cqi);
     filter: drop-shadow(var(--drop-shadow));
 }
 
@@ -214,12 +215,12 @@ output {
     display: grid;
     place-content: center;
     background: var(--dark-grey);
-    left: calc((var(--slider-val) * 1%) + ((50 - var(--slider-val))/100)*8px);
+    left: calc((var(--slider-val) * 1%) + ((50 - var(--slider-val))/100)*var(--output-arrow));
     top: 200%;
     transform: translateX(-50%);
     padding: .25em .5em;
     min-width: 4ch;
-    line-height: 1;
+    line-height: 1.1;
     color: var(--light-grey);
     font-size: max(12px, .75em);
     text-shadow: none;
@@ -232,5 +233,5 @@ output {
         filter .4s cubic-bezier(0.4, 0, 0.2, 1),
         opacity .4s cubic-bezier(0.4, 0, 0.2, 1),
         top .4s cubic-bezier(0.4, 0, 0.2, 1);
-    border-image: conic-gradient(from 135deg at 50% 0%, var(--dark-grey) 0 90deg, #0000 0) 1 /var(--output-arrow) 0 0 0 / calc(var(--output-arrow) - 1px) 0 0 0 repeat;
+    border-image: conic-gradient(from 150deg at 50% 0%, var(--dark-grey) 0 60deg, #0000 0) 1 /var(--output-arrow) 0 0 0 / calc(var(--output-arrow) - 1px) 0 0 0 repeat;
 }
